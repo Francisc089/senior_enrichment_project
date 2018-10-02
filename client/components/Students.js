@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchStudents } from '../store.js'
+import { Link } from 'react-router-dom'
 
 class Students extends Component {
   componentDidMount() {
@@ -15,7 +16,13 @@ class Students extends Component {
         <h2>All Students</h2>
         <ul>
           { students.map(student => {
-            return <li>{student.firstName} {student.lastName} - School: {student.school.name}</li>
+            return (
+              <div>
+                <Link key={student.id} to={`/students/${student.id}`}>
+                  <li>{student.firstName} {student.lastName} - {student.school.name}</li>
+                </Link>
+              </div>  
+            )
           })}
         </ul>
       </div>

@@ -6,6 +6,8 @@ import axios from 'axios'
 //ACTION_TYPES
 const GOT_STUDENTS = 'GOT_STUDENTS'
 const GOT_SCHOOLS = 'GOT_SCHOOLS'
+const GOT_STUDENT = 'GOT_STUDENT'
+const GOT_SCHOOL = 'GOT_SCHOOL'
 
 //ACTION_CREATORS
 const gotStudents = (students) => ({
@@ -17,6 +19,16 @@ const gotSchools = (schools) => ({
   type : GOT_SCHOOLS,
   schools
 });
+
+const gotStudent = (student) => ({
+  type : GOT_STUDENT,
+  student
+});
+
+const gotSchool = (school) => ({
+  type : GOT_SCHOOL,
+  school
+})
 
 //THUNKS
 export const fetchSchools = () => {
@@ -36,9 +48,27 @@ export const fetchStudents = () => {
   };
 };
 
+export const fetchSchool =(id) => {
+  return (dispatch) => {
+    axios.get(`/api/schools/${id}`)
+    .then(school => dispatch(gotSchool(school.data)))
+  };
+};
+
+export const fetchStudent = (id) => {
+  return async (dispatch) => {
+    const response = await axios.get(`/api/students/${id}`);
+    const student = response.data;
+    const action = gotStudent(student);
+    dispatch(action);
+  }
+}
+
 const initialState = {
   students : [],
-  schools : []
+  student : {},
+  schools : [],
+  school : {}
 };
 
 const reducer = (state=initialState, action) => {
@@ -47,6 +77,10 @@ const reducer = (state=initialState, action) => {
       return {...state, students : action.students}
     case GOT_SCHOOLS:
       return {...state, schools : action.schools}
+    case GOT_STUDENT:
+      return {...state, student : action.student}
+    case GOT_SCHOOL:
+      return {...state, school : action.school}
     default :
       return state 
   };
