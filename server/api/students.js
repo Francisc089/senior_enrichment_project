@@ -1,7 +1,10 @@
 //routes for students
-const router = require('express').Router();
-const { models } = require('../db');
-const { Student, School } = models;
+const express = require('express')
+const { School, Student } = require('../db').models
+const router = express.Router()
+const bodyParser = require('body-parser')
+
+router.use(bodyParser.json());
 
 module.exports = router;
 
@@ -20,14 +23,15 @@ router.get('/:studentId', (req, res, next) => {
     where : { id : req.params.studentId },
     include : [ School ]
   })
-    .then(student => res.json(student))
+    .then(student => res.send(student))
     .catch(next)
 });
 
 //create student
 router.post('/', (req, res, next) => {
+  console.log('req.body', req.body)
   Student.create(req.body)
-    .then(student => res.json(student))
+    .then(student => res.send(student))
     .catch(next)
 });
 

@@ -14,11 +14,11 @@ class Schools extends Component {
         <h2>All Schools</h2>
         <ul>
           { schools.map(school => {
-          const studentCount = school.students.length
-          return (
-            <Link key={school.id} to={`/schools/${school.id}`}>
-              <li key={school.id}>{school.name} - {studentCount} </li>
-            </Link>
+            const studentCount = school.students ? school.students.length : 'No Students Entered Yet'
+            return (
+              <Link key={school.id} to={`/schools/${school.id}`}>
+               <li key={school.id}>{school.name} - {studentCount} </li>
+              </Link>
           )}) }
         </ul>
       </div>

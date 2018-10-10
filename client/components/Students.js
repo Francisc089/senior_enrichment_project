@@ -17,11 +17,9 @@ class Students extends Component {
         <ul>
           { students.map(student => {
             return (
-              <div>
-                <Link key={student.id} to={`/students/${student.id}`}>
-                  <li>{student.firstName} {student.lastName} - {student.school.name}</li>
-                </Link>
-              </div>  
+              <Link key={student.id} to={`/students/${student.id}`}>
+                <li key={student.id}>{student.firstName} {student.lastName} - {student.school ? student.school.name : 'None'}</li>
+              </Link>
             )
           })}
         </ul>

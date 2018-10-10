@@ -8,6 +8,8 @@ const GOT_STUDENTS = 'GOT_STUDENTS'
 const GOT_SCHOOLS = 'GOT_SCHOOLS'
 const GOT_STUDENT = 'GOT_STUDENT'
 const GOT_SCHOOL = 'GOT_SCHOOL'
+const POSTED_STUDENT = 'POSTED_STUDENT'
+const POSTED_SCHOOL = 'POSTED_SCHOOL'
 
 //ACTION_CREATORS
 const gotStudents = (students) => ({
@@ -28,7 +30,17 @@ const gotStudent = (student) => ({
 const gotSchool = (school) => ({
   type : GOT_SCHOOL,
   school
-})
+});
+
+const postedStudent = (student) => ({
+  type : POSTED_STUDENT,
+  student
+});
+
+const postedSchool = (school) => ({
+  type : POSTED_SCHOOL,
+  school
+});
 
 //THUNKS
 export const fetchSchools = () => {
@@ -62,7 +74,23 @@ export const fetchStudent = (id) => {
     const action = gotStudent(student);
     dispatch(action);
   }
-}
+};
+
+export const postStudent = (student) => {
+  return (dispatch) => {
+    console.log('thunk student: ', student);
+    axios.post('/api/students', student)
+      .then(student => dispatch(postedStudent(student.data)))
+  }
+};
+
+export const postSchool = (school) => {
+  return (dispatch) => {
+    console.log('thunk school: ', school)
+    axios.post('/api/schools', school)
+      .then(school => dispatch(postedSchool(school.data)))
+  }
+};
 
 const initialState = {
   students : [],
@@ -81,6 +109,10 @@ const reducer = (state=initialState, action) => {
       return {...state, student : action.student}
     case GOT_SCHOOL:
       return {...state, school : action.school}
+    case POSTED_STUDENT:
+      return {...state, students : [...state.students, action.student]}
+    case POSTED_SCHOOL:
+      return {...state, schools : [...state.schools, action.school]}
     default :
       return state 
   };
