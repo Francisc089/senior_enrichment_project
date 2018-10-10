@@ -10,6 +10,8 @@ const GOT_STUDENT = 'GOT_STUDENT'
 const GOT_SCHOOL = 'GOT_SCHOOL'
 const POSTED_STUDENT = 'POSTED_STUDENT'
 const POSTED_SCHOOL = 'POSTED_SCHOOL'
+const DELETE_STUDENT = 'DELETE_STUDENT'
+const DELETE_SCHOOL = 'DELETE_SCHOOL'
 
 //ACTION_CREATORS
 const gotStudents = (students) => ({
@@ -41,6 +43,9 @@ const postedSchool = (school) => ({
   type : POSTED_SCHOOL,
   school
 });
+
+const _deleteStudent = (student) => ({ type : DELETE_STUDENT , student });
+const _deleteSchool = (school) => ({ type : DELETE_SCHOOL, school });
 
 //THUNKS
 export const fetchSchools = () => {
@@ -92,6 +97,21 @@ export const postSchool = (school) => {
   }
 };
 
+export const deleteStudent = (student) => {
+  console.log('thunk school: ', school)
+  return (dispatch) => {
+    axios.delete(`/api/students/${student.id}`)
+      .then(() => dispatch(_deleteStudent(student)))
+  }
+};
+
+export const deleteSchool = (school) => {
+  return (dispatch) => {
+    axios.delete(`/api/schools/${school.id}`)
+      .then(() => dispatch(_deleteSchool(school)))
+  }
+};
+
 const initialState = {
   students : [],
   student : {},
@@ -113,6 +133,12 @@ const reducer = (state=initialState, action) => {
       return {...state, students : [...state.students, action.student]}
     case POSTED_SCHOOL:
       return {...state, schools : [...state.schools, action.school]}
+      case DELETE_STUDENT:
+        const students = state.students.filter(student => student.id !== action.student.id)
+        return {...state, students}
+      case DELETE_SCHOOL:
+      const schools = state.schools.filter(school => school.id !== action.school.id)
+      return {...state, schools}
     default :
       return state 
   };

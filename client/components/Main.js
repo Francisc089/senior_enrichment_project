@@ -22,8 +22,8 @@ export default class Main extends Component {
           <Switch>
             <Route exact path='/schools/create' render={({ history }) => <CreateSchool history={history}/>} />
             <Route exact path='/students/create' render={({ history }) => <CreateStudent history={history}/>} />
-            <Route path='/students/:id' render={(routeProps) => <Student id={routeProps.match.params.id}/>} />
-            <Route path='/schools/:id' render={(routeProps) => <School id={routeProps.match.params.id}/>}/> 
+            <Route path='/students/:id' render={({ match, history }) => <Student id={match.params.id * 1} history={history}/>} />
+            <Route path='/schools/:id' render={({ match, history }) => <School id={match.params.id * 1} history={history}/>}/> 
             <Route exact path='/students' component={Students}/>
             <Route exact path='/schools' render={()=>  <Schools />} />
           </Switch>
