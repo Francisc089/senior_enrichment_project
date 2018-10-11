@@ -8,16 +8,15 @@ class CreateStudent extends Component {
     this.state = {
       firstName : '',
       lastName : '',
-      gpa : ''
+      gpa : '',
+      schoolId : this.props.schoolId || 3
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleChange(event) {
-    this.setState({
-      [event.target.name] : event.target.value
-    })
+    this.setState({ [event.target.name] : event.target.value })
   }
 
   handleSubmit(event) {
@@ -29,8 +28,9 @@ class CreateStudent extends Component {
   }
 
   render () {
-    const {firstName, lastName, gpa} = this.state
+    const { firstName, lastName, gpa, schoolId } = this.state
     const {handleChange, handleSubmit} = this
+    const { schools } = this.props;
     return (
       <div>
         <h2>Enter Student Info</h2>
@@ -51,18 +51,29 @@ class CreateStudent extends Component {
               GPA: <input id='gpa' name='gpa' type='text' value={gpa} onChange={handleChange}/>
             </label>
           </div>
+          <div>
+            <label>
+              School: 
+              <select name='schoolId' value={schoolId} onChange={handleChange}>
+                <option>----</option>
+                {
+                  schools.map(school => <option key={school.id} value={school.id}>{school.name}</option>)
+                }
+              </select>
+            </label>
+          </div>
           <button type='submit'>Save</button>
         </form>
       </div>
     )
   }
-}
+};
 
-/* const mapStateToProps = state => {
+const mapStateToProps = state => {
   return {
-  
-  }
-} */
+    schools : state.schools
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -70,4 +81,4 @@ const mapDispatchToProps = dispatch => {
   }
 };
 
-export default connect(null, mapDispatchToProps)(CreateStudent)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateStudent)

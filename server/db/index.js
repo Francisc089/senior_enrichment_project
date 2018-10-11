@@ -49,7 +49,7 @@ const syncAndSeed = () => {
     .then(() => Promise.all([
       School.create({ name : 'Fullstack Academy', address : '5 Hanover Sq, New York, NY 10004', description : 'Best place to learn code' }),
       School.create({ name : 'School of Hard Knocks', address : 'The mean streets of Earth', description : "It's a hard knock life for us" }),
-      School.create({ name : 'Acme School of Tom Foolery', address : 'Looney Tunes st, Acme City, Disney 42068', description : "Let's get weird" })
+      School.create({ name : 'Acme School of Tom Foolery', address : 'Looney Tunes st, Acme City, Disney 42068', description : "Where the Tunes go to get Looney" })
     ]))
     .then((schools) => {
       [ fullstack, hardKnocks, acmeSchool ] = schools;

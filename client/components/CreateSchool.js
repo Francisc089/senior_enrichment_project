@@ -32,6 +32,7 @@ class CreateSchool extends Component {
     const {handleChange, handleSubmit} = this
     return (
       <div>
+        <h3>Create School</h3>
         <form onSubmit={handleSubmit}>
           <div>
             <label>
