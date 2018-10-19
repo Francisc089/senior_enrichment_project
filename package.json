@@ -39,6 +39,7 @@
     "babel-preset-stage-2": "^6.24.1"
   },
   "scripts": {
+    "postinstall": "npm run webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
     "webpack": "./node_modules/webpack/bin/webpack.js",
     "start:dev": "npm run webpack -- --watch --mode=development & DATABASE_URL=postgres://localhost/acme_doe nodemon ./server/server.js --ignore src/ --ignore dist"
