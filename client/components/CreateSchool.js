@@ -23,7 +23,7 @@ class CreateSchool extends Component {
   handleSubmit(event) {
     event.preventDefault()
     const school = {...this.state}
-    this.props.postSchool(this.state)
+    this.props.postSchool(school)
     this.props.history.push('/schools')
   }
 
